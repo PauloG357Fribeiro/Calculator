@@ -12,6 +12,7 @@ ReactDOM.render(
         <h4>
             By Paulo G.
         </h4>
+        <Calculator />
     </div>
 , document.getElementById('root'));
 
