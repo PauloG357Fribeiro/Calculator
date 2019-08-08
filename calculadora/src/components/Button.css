@@ -10,3 +10,25 @@
     border-right: var(--boder--button);
     border-bottom: var(--boder--button);
 }
+
+.button:active{
+    background-color: #b3b3b3;/*Active é para quando clicar (ativo) mudar de cor*/
+}
+
+
+.button.double{
+    grid-column: span 2;
+}
+
+.button.triple{
+    grid-column: span 3;
+}
+
+.button.operation{
+    background-color: teal;
+    color: #fff
+}
+
+.button.button.operation:active{
+    background-color: #fa8231;
+}

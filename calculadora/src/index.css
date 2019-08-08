@@ -15,5 +15,5 @@ body {
   text-align: center;
 
   color: #fff;
-  background-image: url('./main/Q1QP.gif');
+  background: linear-gradient(to right, orange, red);
 }

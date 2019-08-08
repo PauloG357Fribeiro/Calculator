@@ -1,0 +1,11 @@
+.Display{
+    grid-column: span 4; /*Ocupa 4 partes*/
+    background-color: chocolate;
+
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 20px;
+    font-size: 2.2em;
+    overflow: hidden;
+}
