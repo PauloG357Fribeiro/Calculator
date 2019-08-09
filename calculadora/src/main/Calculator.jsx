@@ -4,8 +4,20 @@ import './Calculator.css'
 import Button from '../components/Button'
 import Display from '../components/Display'
 
+const inicialState = {
+    displayValue: '0', //Display começa com zero.
+    clearDisplay: false, //Cria uma função que zera
+    operation: null, //Armazena as operações +-/.
+    value: [0, 0], //Dois valores, ex; 80 e o 20
+    current: 0 //Qual está manipulando o 1° ou 2° valor
+}
+
 export default class Calculator extends Component{
 
+    state = { ...inicialState }
+    //Criamos o clone para dentro do objeto
+
+    //Limpar operação (AC)
     clearMemory(){
         console.log('Limpar')
     }
