@@ -6,28 +6,86 @@ import Display from '../components/Display'
 
 const inicialState = {
     displayValue: '0', //Display começa com zero.
-    clearDisplay: false, //Cria uma função que zera
-    operation: null, //Armazena as operações +-/.
-    value: [0, 0], //Dois valores, ex; 80 e o 20
-    current: 0 //Qual está manipulando o 1° ou 2° valor
+    clearDisplay: false,//criar um função que zera
+    operation: null,//armazenar as operações +-/...
+    values: [0 , 0],//dois valores, ex; 80 e o 20
+    current: 0 //Qual está manipulando o 1 ou 2 valor
 }
 
 export default class Calculator extends Component{
 
-    state = { ...inicialState }
-    //Criamos o clone para dentro do objeto
+state = { ...inicialState }
+//Criamos o clone para dentro do objeto
 
-    //Limpar operação (AC)
+    //Limpar operação AC
     clearMemory(){
-        console.log('Limpar')
+       this.setState({ ...inicialState })
     }
-    //Setar se o usuário colocou /+-*
-    setOperation(operation){
-        console.log(operation)
+    //Setar se o usuáio colocou /+-*
+    setOperation(operation) {
+        if (this.state.current === 0) {
+            this.setState({ operation, current: 1, clearDisplay: true })
+        } else {
+            const equals = operation === '='
+            const currentOperation = this.state.operation
+
+            const values = [...this.state.values]
+            switch(currentOperation){
+                case '+':
+                    values[0] = values[0] + values[1]
+                    break
+                case '-':
+                    values[0] = values[0] - values[1]
+                    break
+                case '/':
+                    values[0] = values[0] / values[1]
+                    break
+                case '*':
+                    values[0] = values[0] * values[1]
+                    break
+            default:
+            }
+
+            this.setState({
+                displayValue: values[0],
+                operation: equals ? null : operation,
+                current: equals ? 0 : 1,
+                clearDisplay: !equals,
+                values
+            })
+        }
     }
     //Adicionar Digito
     addDigito(n){
-        console.log(n)
+        if(n === "." && this.state.displayValue.includes(".")){
+            return //Se já tem ponto na calc, não aceite outro
+        }
+        //Display so valor zero, permanece zero
+        const clearDisplay = this.state.displayValue === "0"
+            || this.state.clearDisplay
+        /*Essa const é para saber se o valor será limpo 
+        ou permanece o estado do display*/
+        const currentValue = clearDisplay ? '' : this.state.displayValue
+        //No display terá o valor digitado + o n digitado
+        const displayValue = currentValue + n
+        //Agora para mudar o display - o false e para nao zerar
+        this.setState({displayValue, clearDisplay: false})
+
+        //Ponto não é uma operação e nem um número por isso o tratamento
+        if (n !== '.') {
+            //current é a const que varia o valor
+            const i = this.state.current
+            //Converte para float
+            const newValue = parseFloat(displayValue)
+            //Coloquei para um novo array
+            const values = [...this.state.values]
+            //Coloquei para uma novo valor
+            values[i] = newValue
+            //Coloquei tudo para state
+            this.setState({ values })
+            //vamos ver na tela em impetor
+            console.log(values)
+        }
     }
 
     constructor(props){
@@ -39,7 +97,7 @@ export default class Calculator extends Component{
     render(){
         return(
             <div className="Calculator">
-                <Display value={100}/>
+                <Display value={this.state.displayValue}/>
                 <Button label = "AC" click={this.clearMemory} triple/>
                 <Button label = "/" click={this.setOperation} operation/>
                 <Button label = "7" click={this.addDigito}/>
